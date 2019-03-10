@@ -1,14 +1,22 @@
 const express = require("express");
 const path = require('path');
-const adminData = require('./routes/admin.js');
-const shopRoutes = require('./routes/shop.js');
+
 
 
 const app = express();
 const bodyParser = require("body-parser");
+const expressHbs = require('express-handlebars');
 
-app.set('view engine', 'pug');
+// app.engine('hbs', expressHbs({
+//     layoutsDir: 'views/layout/',
+//     defaultLayout: 'main-layout',
+//     extname: 'hbs'
+// }));
+app.set('view engine', 'ejs');
 app.set('views', 'views');
+
+const adminData = require('./routes/admin.js');
+const shopRoutes = require('./routes/shop.js');
 app.use(
     bodyParser.urlencoded({
         extended: false
@@ -22,7 +30,7 @@ app.use('/admin', adminData.routes);
 
 app.use((req, res, next) => {
     res.status(404).render('PageNotFound', {
-        pageTitle: 'PageNotFound'
+        pageTitle: 'Page Not Found'
     });
 })
 
